@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from "moment";
 import { Form, Button } from "react-bootstrap";
 import { bindActionCreators } from "react-redux";
 import { connect } from "react-redux";
@@ -11,7 +12,7 @@ class App extends Component {
     };
   }
   handleClick() {
-    this.props.addReminder(this.state.text);
+    this.props.addReminder(this.state.text, this.state.dueDate);
   }
   deleteReminder(id) {
     this.props.deleteReminder(id);
@@ -25,6 +26,9 @@ class App extends Component {
           return (
             <li key={reminder.id} className="list-group-item">
               <div>{reminder.text}</div>
+              <div>
+                <em>{moment(new Date(reminder.dueDate)).fromNow()}</em>
+              </div>
               <div
                 className="delete-button"
                 onClick={() => this.deleteReminder(reminder.id)}
@@ -51,6 +55,12 @@ class App extends Component {
               type="text"
               placeholder="add reminder"
               onChange={(event) => this.setState({ text: event.target.value })}
+            />
+            <Form.Control
+              type="datetime-local"
+              onChange={(event) =>
+                this.setState({ dueDate: event.target.value })
+              }
             />
             <Button
               className="button"
