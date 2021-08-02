@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
 import { bindActionCreators } from "react-redux";
 import { connect } from "react-redux";
-import { addReminder } from "./actions";
+import { addReminder, deleteReminder } from "./actions";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +13,9 @@ class App extends Component {
   handleClick() {
     this.props.addReminder(this.state.text);
   }
+  deleteReminder(id) {
+    this.props.deleteReminder(id);
+  }
   handleReminders() {
     const { reminders } = this.props;
     console.log("reminders is ", reminders);
@@ -20,15 +23,24 @@ class App extends Component {
       <ul className="list-group col-sm-4">
         {reminders.map((reminder) => {
           return (
-            <li key={reminder.id}>
+            <li key={reminder.id} className="list-group-item">
               <div>{reminder.text}</div>
+              <div
+                className="delete-button"
+                onClick={() => this.deleteReminder(reminder.id)}
+              >
+                {" "}
+                X
+              </div>
             </li>
           );
         })}
       </ul>
     );
   }
+
   render() {
+    console.log("ini props terbaru ", this.props);
     return (
       <div className="App">
         <Form className="mt-5">
@@ -40,15 +52,15 @@ class App extends Component {
               placeholder="add reminder"
               onChange={(event) => this.setState({ text: event.target.value })}
             />
+            <Button
+              className="button"
+              variant="success"
+              type="button"
+              onClick={() => this.handleClick()}
+            >
+              Add
+            </Button>
           </Form.Group>
-          <Button
-            className="button"
-            variant="success"
-            type="button"
-            onClick={() => this.handleClick()}
-          >
-            Add
-          </Button>
         </Form>
         {this.handleReminders()}
       </div>
@@ -62,4 +74,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { addReminder })(App);
+export default connect(mapStateToProps, { addReminder, deleteReminder })(App);

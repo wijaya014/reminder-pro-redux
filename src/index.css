@@ -11,3 +11,11 @@
 .input {
   margin: 5px;
 }
+.button {
+  display: inline-block;
+}
+.delete-button {
+  display: inline-block;
+  margin-bottom: -5px;
+  float: right;
+}
