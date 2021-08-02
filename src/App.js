@@ -3,7 +3,7 @@ import moment from "moment";
 import { Form, Button } from "react-bootstrap";
 import { bindActionCreators } from "react-redux";
 import { connect } from "react-redux";
-import { addReminder, deleteReminder } from "./actions";
+import { addReminder, deleteReminder, clearReminder } from "./actions";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -73,6 +73,14 @@ class App extends Component {
           </Form.Group>
         </Form>
         {this.handleReminders()}
+        <Button
+          className="button"
+          variant="danger"
+          type="button"
+          onClick={() => this.props.clearReminder()}
+        >
+          cleaar
+        </Button>
       </div>
     );
   }
@@ -84,4 +92,8 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { addReminder, deleteReminder })(App);
+export default connect(mapStateToProps, {
+  addReminder,
+  deleteReminder,
+  clearReminder,
+})(App);

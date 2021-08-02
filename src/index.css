@@ -15,7 +15,7 @@
   display: inline-block;
 }
 .delete-button {
-  display: inline-block;
+  display: inline;
   margin-bottom: -5px;
   float: right;
 }
